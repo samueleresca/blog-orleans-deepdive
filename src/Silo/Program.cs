@@ -19,10 +19,11 @@ namespace Silo
             var siloBuilder = new SiloHostBuilder()
                 .UseLocalhostClustering()
                 .UseDashboard(options => { })
+                .AddMemoryGrainStorage("dev")
                 .Configure<ClusterOptions>(options =>
                 {
                     options.ClusterId = "dev";
-                    options.ServiceId = "Orleans2GettingOrganised";
+                    options.ServiceId = "blog-orleans-deepdive";
                 })
                 .Configure<EndpointOptions>(options =>
                     options.AdvertisedIPAddress = IPAddress.Loopback)

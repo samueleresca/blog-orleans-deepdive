@@ -44,11 +44,6 @@ namespace API
         {
             var client = new ClientBuilder()
                 .ConfigureApplicationParts(parts => parts.AddApplicationPart(typeof(IValueGrain).Assembly))
-                .Configure<ClusterOptions>(options =>
-                {
-                    options.ClusterId = "dev";
-                    options.ServiceId = "blog-orleans-deepdive";
-                })
                 .Build();
             StartClientWithRetries(client).Wait();
             return client;

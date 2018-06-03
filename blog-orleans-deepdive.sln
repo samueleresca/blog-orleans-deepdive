@@ -5,13 +5,13 @@ VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F8363B78-7308-4766-9B6A-66E028A6CCDE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Silo", "src\Silo\Silo.csproj", "{0DE525D3-4A93-4787-A704-BFF20D605652}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Silo", "src\Silo\Silo.csproj", "{0DE525D3-4A93-4787-A704-BFF20D605652}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrainInterfaces", "src\GrainInterfaces\GrainInterfaces.csproj", "{A2422A92-2963-4BBD-8FA3-3DF86698ED0F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrainInterfaces", "src\GrainInterfaces\GrainInterfaces.csproj", "{A2422A92-2963-4BBD-8FA3-3DF86698ED0F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grains", "src\Grains\Grains.csproj", "{624A82FF-99C8-4483-B25B-51610A7DD034}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grains", "src\Grains\Grains.csproj", "{624A82FF-99C8-4483-B25B-51610A7DD034}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "src\API\API.csproj", "{C3D02F0B-79F7-4A85-8BD1-122DB7627526}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "src\API\API.csproj", "{C3D02F0B-79F7-4A85-8BD1-122DB7627526}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

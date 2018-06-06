@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using GrainInterfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Orleans;
 using Orleans.Configuration;
-using Orleans.Hosting;
 
 namespace API
 {
@@ -27,6 +26,20 @@ namespace API
             services.AddSingleton<IClusterClient>(CreateClusterClient);
         }
 
+        private IClusterClient CreateClusterClient(IServiceProvider serviceProvider)
+        {
+            var client = new ClientBuilder()
+                .Configure<ClusterOptions>(_ =>
+                {
+                    _.ClusterId = "dev";
+                    _.ServiceId = "blog-orleans-deepdive";
+                })
+                .ConfigureLogging(_ => _.AddConsole())
+                .Build();
+            StartClientWithRetries(client).Wait();
+            return client;
+        }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
         {
@@ -40,18 +53,9 @@ namespace API
             app.UseStaticFiles();
         }
 
-        private IClusterClient CreateClusterClient(IServiceProvider serviceProvider)
-        {
-            var client = new ClientBuilder()
-                .ConfigureApplicationParts(parts => parts.AddApplicationPart(typeof(IValueGrain).Assembly))
-                .Build();
-            StartClientWithRetries(client).Wait();
-            return client;
-        }
-
         private static async Task StartClientWithRetries(IClusterClient client)
         {
-            for (var i=0; i<5; i++)
+            for (var i = 0; i < 5; i++)
             {
                 try
                 {

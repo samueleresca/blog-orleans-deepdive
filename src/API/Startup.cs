@@ -29,6 +29,7 @@ namespace API
         private IClusterClient CreateClusterClient(IServiceProvider serviceProvider)
         {
             var client = new ClientBuilder()
+                .UseLocalhostClustering()
                 .Configure<ClusterOptions>(_ =>
                 {
                     _.ClusterId = "dev";

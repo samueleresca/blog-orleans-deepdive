@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using GrainInterfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -29,12 +30,8 @@ namespace API
         private IClusterClient CreateClusterClient(IServiceProvider serviceProvider)
         {
             var client = new ClientBuilder()
-                .UseLocalhostClustering()
-                .Configure<ClusterOptions>(_ =>
-                {
-                    _.ClusterId = "dev";
-                    _.ServiceId = "blog-orleans-deepdive";
-                })
+                .UseLocalhostClustering( serviceId: "blog-orleans-deepdive")
+                .ConfigureApplicationParts(parts => parts.AddApplicationPart(typeof(IValueGrain).Assembly).WithReferences())
                 .ConfigureLogging(_ => _.AddConsole())
                 .Build();
             StartClientWithRetries(client).Wait();

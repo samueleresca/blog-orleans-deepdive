@@ -13,15 +13,10 @@ namespace Silo
         static async Task Main(string[] args)
         {
             var siloBuilder = new SiloHostBuilder()
-                .AddMemoryGrainStorage("dev")
-                .Configure<ClusterOptions>(options =>
-                {
-                    options.ClusterId = "dev";
-                    options.ServiceId = "blog-orleans-deepdive";
-                })
-                .Configure<EndpointOptions>(options =>
-                    options.AdvertisedIPAddress = IPAddress.Loopback)
-                .ConfigureLogging(logging => logging.AddConsole());
+                .UseLocalhostClustering(serviceId:"blog-orleans-deepdive")
+               
+                .ConfigureLogging(logging => logging.AddConsole())
+                .UseDashboard();
 
 
             using (var host = siloBuilder.Build())

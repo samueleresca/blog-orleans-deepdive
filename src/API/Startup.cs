@@ -24,17 +24,18 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddSingleton<IClusterClient>(CreateClusterClient);
+            services.AddSingleton(CreateClusterClient);
         }
 
         private IClusterClient CreateClusterClient(IServiceProvider serviceProvider)
         {
             var client = new ClientBuilder()
                 .UseLocalhostClustering( serviceId: "blog-orleans-deepdive")
-                .ConfigureApplicationParts(parts => parts.AddApplicationPart(typeof(IValueGrain).Assembly).WithReferences())
+                .ConfigureApplicationParts(parts => parts.AddApplicationPart(typeof(IBasketGrain).Assembly).WithReferences())
                 .ConfigureLogging(_ => _.AddConsole())
                 .Build();
-            StartClientWithRetries(client).Wait();
+           
+            client.Connect().Wait();
             return client;
         }
 

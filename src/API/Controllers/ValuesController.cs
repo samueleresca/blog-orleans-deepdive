@@ -3,42 +3,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GrainInterfaces;
+using GrainInterfaces.States;
 using Microsoft.AspNetCore.Mvc;
 using Orleans;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    public class ValuesController : Controller
+    [Route("api/basket")]
+    public class BasketController : Controller
     {
-        private IClusterClient client;
+        private readonly IClusterClient _client;
         
-        public ValuesController(IClusterClient client)
+        public BasketController(IClusterClient client)
         {
-            this.client = client;
+            _client = client;
         }
-
-        // GET api/values
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/values/5
+      
         [HttpGet("{id}")]
-        public async Task<string> Get(int id)
+        public async Task<Basket> Get(Guid id)
         {
-            var grain = this.client.GetGrain<IValueGrain>(id);
-            return await grain.GetValue();
+            var grain = _client.GetGrain<IBasketGrain>(id);
+            return await grain.GetCart();
+        }
+        
+        [HttpGet("{id}/product")]
+        public async Task GetProduct(Guid id)
+        {
+            var grain = _client.GetGrain<IBasketGrain>(id);
+            await grain.GetProducts();
         }
 
-        // PUT api/values/5
-        [HttpPost("{id}")]
-        public async Task Post(int id, [FromBody]string value)
+        [HttpPost("{id}/product")]
+        public async Task AddProduct(Guid id, [FromBody]Product product)
         {
-            var grain = this.client.GetGrain<IValueGrain>(id);
-            await grain.SetValue(value);
+            var grain = _client.GetGrain<IBasketGrain>(id);
+            await grain.AddProduct(product);
         }
+     
     }
 }

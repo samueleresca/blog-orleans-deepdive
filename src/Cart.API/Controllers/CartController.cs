@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using GrainInterfaces;
 using GrainInterfaces.States;
 using Microsoft.AspNetCore.Mvc;
 using Orleans;
 
-namespace API.Controllers
+namespace Cart.API.Controllers
 {
     [Route("api/cart")]
     public class CartController : Controller
@@ -20,7 +19,7 @@ namespace API.Controllers
         }
       
         [HttpGet("{id}")]
-        public async Task<Cart> Get(Guid id)
+        public async Task<GrainInterfaces.States.Cart> Get(Guid id)
         {
             var grain = _client.GetGrain<ICartGrain>(id);
             return await grain.GetCart();

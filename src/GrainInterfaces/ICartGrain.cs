@@ -5,9 +5,9 @@ using GrainInterfaces.States;
 
 namespace GrainInterfaces
 {
-    public interface IBasketGrain : IGrainWithGuidKey
+    public interface ICartGrain : IGrainWithGuidKey
     {
-        Task<Basket> GetCart();
+        Task<Cart> GetCart();
         
         Task<List<Product>> GetProducts();
         

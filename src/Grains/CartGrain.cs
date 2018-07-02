@@ -8,17 +8,17 @@ using Orleans.Providers;
 
 namespace Grains
 {
-    [StorageProvider(ProviderName="OrleansStorage")]
-    public class BasketGrain : Grain<BasketState>, IBasketGrain
+    [StorageProvider(ProviderName="CartStorage")]
+    public class CartGrain : Grain<CartState>, ICartGrain
     {
    
-        public async Task<Basket> GetCart()
+        public async Task<Cart> GetCart()
         {
             await ReadStateAsync();
             
             if (State.Value != null) return State.Value;
 
-            State.Value = new Basket
+            State.Value = new Cart
             {
                 Id =  Guid.NewGuid(),
                 Products = new List<Product>()
@@ -42,7 +42,7 @@ namespace Grains
 
             if (State.Value == null)
             {
-                State = new BasketState();
+                State = new CartState();
             }
             
             State.Value.Products.Add(product);

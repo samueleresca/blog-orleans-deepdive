@@ -23,7 +23,7 @@ namespace GrainInterfaces.States
     }
 
     [Serializable]
-    public class Basket
+    public class Cart
     {
         public Guid Id { get; set; }
         
@@ -41,8 +41,8 @@ namespace GrainInterfaces.States
     }
 
     [Serializable]
-    public class BasketState
+    public class CartState
     {
-        public Basket Value { get; set; }
+        public Cart Value { get; set; }
     }
 }

@@ -1,9 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Orleans;
-using Orleans.Configuration;
 using Orleans.Hosting;
 using System;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace Silo
@@ -14,7 +12,7 @@ namespace Silo
         {
             var siloBuilder = new SiloHostBuilder()
                 .UseLocalhostClustering(serviceId:"blog-orleans-deepdive")
-                .AddAdoNetGrainStorage("OrleansStorage", options=>
+                .AddAdoNetGrainStorage("CartStorage", options=>
                     {
                         options.Invariant = "System.Data.SqlClient";
                         options.ConnectionString = "Data Source=localhost,1433;Initial Catalog=ServicePersistence;Integrated Security=False;User ID=sa;Password=P@55w0rd";

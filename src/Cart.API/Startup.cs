@@ -20,7 +20,6 @@ namespace API
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
@@ -31,7 +30,7 @@ namespace API
         {
             var client = new ClientBuilder()
                 .UseLocalhostClustering( serviceId: "blog-orleans-deepdive")
-                .ConfigureApplicationParts(parts => parts.AddApplicationPart(typeof(IBasketGrain).Assembly).WithReferences())
+                .ConfigureApplicationParts(parts => parts.AddApplicationPart(typeof(ICartGrain).Assembly).WithReferences())
                 .ConfigureLogging(_ => _.AddConsole())
                 .Build();
            
@@ -39,7 +38,6 @@ namespace API
             return client;
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
         {
             if (env.IsDevelopment())

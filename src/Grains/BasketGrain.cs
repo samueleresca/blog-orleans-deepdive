@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GrainInterfaces;
 using Orleans;
 using System.Threading.Tasks;
@@ -11,22 +12,35 @@ namespace Grains
     public class BasketGrain : Grain<BasketState>, IBasketGrain
     {
    
-        public Task<Basket> GetCart()
+        public async Task<Basket> GetCart()
         {
-            return Task.FromResult(State.Value);
+            await ReadStateAsync();
+            
+            if (State.Value != null) return State.Value;
+
+            State.Value = new Basket
+            {
+                Id =  Guid.NewGuid(),
+                Products = new List<Product>()
+            };
+
+            await WriteStateAsync();
+            
+            return State.Value;
         }
         
         
-        public Task<List<Product>> GetProducts()
+        public async Task<List<Product>> GetProducts()
         {
-            return Task.FromResult(State.Value.Products);
+            await ReadStateAsync();
+            return State.Value.Products;
         }
 
         public async Task AddProduct(Product product)
         {
-        
+            await ReadStateAsync();
 
-            if (State.Value.Products == null)
+            if (State.Value == null)
             {
                 State = new BasketState();
             }

@@ -35,7 +35,7 @@ namespace API
                 .ConfigureLogging(_ => _.AddConsole())
                 .Build();
            
-            client.Connect().Wait();
+            StartClientWithRetries( client).Wait();
             return client;
         }
 
